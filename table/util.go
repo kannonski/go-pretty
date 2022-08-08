@@ -20,11 +20,11 @@ func AutoIndexColumnID(colIdx int) string {
 	return out
 }
 
-// ComputeSimpleBoxStyle extracts the characters needed to construct a box. For ex.,
+// ComputeBoxStyle extracts the characters needed to construct a box. For ex.,
 // with the following input:
 //  ┏━━━┳━━━┓
 //  ┣━━━╋━━━┫
-//  ┃< >┃< >┃~
+//  ┃< >┃< >┃ ~
 //  ┗━━━┻━━━┛
 // the output would be:
 //   BoxStyle{
@@ -45,9 +45,9 @@ func AutoIndexColumnID(colIdx int) string {
 //       TopLeft:          "┏",
 //       TopRight:         "┓",
 //       TopSeparator:     "┳",
-//       UnfinishedRow:    "~",
+//       UnfinishedRow:    " ~",
 //   }
-func ComputeSimpleBoxStyle(boxDrawing string) BoxStyle {
+func ComputeBoxStyle(boxDrawing string) BoxStyle {
 	charMatrix := [4][10]string{}
 	maxLines := len(charMatrix)
 	maxLineLen := len(charMatrix[0])
@@ -75,7 +75,7 @@ func ComputeSimpleBoxStyle(boxDrawing string) BoxStyle {
 		BottomLeft:       charMatrix[3][0],
 		BottomRight:      charMatrix[3][8],
 		BottomSeparator:  charMatrix[3][4],
-		EmptySeparator:   text.RepeatAndTrim(" ", text.RuneWidthWithoutEscSequences(charMatrix[1][2])),
+		EmptySeparator:   text.RepeatAndTrim(" ", text.RuneWidthWithoutEscSequences(charMatrix[1][4])),
 		Left:             charMatrix[2][0],
 		LeftSeparator:    charMatrix[1][0],
 		MiddleHorizontal: charMatrix[0][2],

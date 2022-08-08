@@ -72,8 +72,8 @@ func TestComputeBoxStyle(t *testing.T) {
 			UnfinishedRow:    " ~",
 		}
 
-		assertOutput(expectedOutput, ComputeSimpleBoxStyle(input))
-		assertOutput(expectedOutput, ComputeSimpleBoxStyle(strings.TrimSpace(input)))
+		assertOutput(expectedOutput, ComputeBoxStyle(input))
+		assertOutput(expectedOutput, ComputeBoxStyle(strings.TrimSpace(input)))
 	})
 
 	t.Run("style 2", func(t *testing.T) {
@@ -99,8 +99,8 @@ func TestComputeBoxStyle(t *testing.T) {
 			UnfinishedRow:    " ≈",
 		}
 
-		assertOutput(expectedOutput, ComputeSimpleBoxStyle(input))
-		assertOutput(expectedOutput, ComputeSimpleBoxStyle(strings.TrimSpace(input)))
+		assertOutput(expectedOutput, ComputeBoxStyle(input))
+		assertOutput(expectedOutput, ComputeBoxStyle(strings.TrimSpace(input)))
 	})
 }
 
