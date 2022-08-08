@@ -2,6 +2,7 @@ package table
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -35,7 +36,75 @@ func TestAutoIndexColumnID(t *testing.T) {
 	assert.Equal(t, "AAAA", AutoIndexColumnID(18278))
 }
 
-func TestIsNumber(t *testing.T) {
+func TestComputeBoxStyle(t *testing.T) {
+	assertOutput := func(expected, actual BoxStyle) {
+		assert.Equal(t, expected, actual)
+		if expected != actual {
+			fmt.Printf("%#v", actual)
+		}
+	}
+
+	t.Run("style 1", func(t *testing.T) {
+		input := `
+┏━━━┳━━━┓
+┣━━━╋━━━┫
+┃< >┃< >┃ ~
+┗━━━┻━━━┛
+`
+		expectedOutput := BoxStyle{
+			BottomLeft:       "┗",
+			BottomRight:      "┛",
+			BottomSeparator:  "┻",
+			EmptySeparator:   " ",
+			Left:             "┃",
+			LeftSeparator:    "┣",
+			MiddleHorizontal: "━",
+			MiddleSeparator:  "╋",
+			MiddleVertical:   "┃",
+			PaddingLeft:      "<",
+			PaddingRight:     ">",
+			PageSeparator:    "\n",
+			Right:            "┃",
+			RightSeparator:   "┫",
+			TopLeft:          "┏",
+			TopRight:         "┓",
+			TopSeparator:     "┳",
+			UnfinishedRow:    " ~",
+		}
+
+		assertOutput(expectedOutput, ComputeSimpleBoxStyle(input))
+		assertOutput(expectedOutput, ComputeSimpleBoxStyle(strings.TrimSpace(input)))
+	})
+
+	t.Run("style 2", func(t *testing.T) {
+		input := "╔═══╦═══╗\n" + "╠═══╬═══╣\n" + "║   ║   ║ ≈\n" + "╚═══╩═══╝\n"
+		expectedOutput := BoxStyle{
+			BottomLeft:       "╚",
+			BottomRight:      "╝",
+			BottomSeparator:  "╩",
+			EmptySeparator:   " ",
+			Left:             "║",
+			LeftSeparator:    "╠",
+			MiddleHorizontal: "═",
+			MiddleSeparator:  "╬",
+			MiddleVertical:   "║",
+			PaddingLeft:      " ",
+			PaddingRight:     " ",
+			PageSeparator:    "\n",
+			Right:            "║",
+			RightSeparator:   "╣",
+			TopLeft:          "╔",
+			TopRight:         "╗",
+			TopSeparator:     "╦",
+			UnfinishedRow:    " ≈",
+		}
+
+		assertOutput(expectedOutput, ComputeSimpleBoxStyle(input))
+		assertOutput(expectedOutput, ComputeSimpleBoxStyle(strings.TrimSpace(input)))
+	})
+}
+
+func Test_isNumber(t *testing.T) {
 	assert.True(t, isNumber(int(1)))
 	assert.True(t, isNumber(int8(1)))
 	assert.True(t, isNumber(int16(1)))

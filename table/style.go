@@ -354,26 +354,7 @@ var (
 	//  +-----+------------+-----------+--------+-----------------------------+
 	//  |     |            | TOTAL     |  10000 |                             |
 	//  +-----+------------+-----------+--------+-----------------------------+
-	StyleBoxDefault = BoxStyle{
-		BottomLeft:       "+",
-		BottomRight:      "+",
-		BottomSeparator:  "+",
-		EmptySeparator:   text.RepeatAndTrim(" ", text.RuneWidthWithoutEscSequences("+")),
-		Left:             "|",
-		LeftSeparator:    "+",
-		MiddleHorizontal: "-",
-		MiddleSeparator:  "+",
-		MiddleVertical:   "|",
-		PaddingLeft:      " ",
-		PaddingRight:     " ",
-		PageSeparator:    "\n",
-		Right:            "|",
-		RightSeparator:   "+",
-		TopLeft:          "+",
-		TopRight:         "+",
-		TopSeparator:     "+",
-		UnfinishedRow:    " ~",
-	}
+	StyleBoxDefault = ComputeSimpleBoxStyle("+---+---+\n" + "+---+---+\n" + "|   |   | ~\n" + "+---+---+")
 
 	// StyleBoxBold defines a Boxed-Table like below:
 	//  ┏━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -385,26 +366,7 @@ var (
 	//  ┣━━━━━╋━━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 	//  ┃     ┃            ┃ TOTAL     ┃  10000 ┃                             ┃
 	//  ┗━━━━━┻━━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-	StyleBoxBold = BoxStyle{
-		BottomLeft:       "┗",
-		BottomRight:      "┛",
-		BottomSeparator:  "┻",
-		EmptySeparator:   text.RepeatAndTrim(" ", text.RuneWidthWithoutEscSequences("╋")),
-		Left:             "┃",
-		LeftSeparator:    "┣",
-		MiddleHorizontal: "━",
-		MiddleSeparator:  "╋",
-		MiddleVertical:   "┃",
-		PaddingLeft:      " ",
-		PaddingRight:     " ",
-		PageSeparator:    "\n",
-		Right:            "┃",
-		RightSeparator:   "┫",
-		TopLeft:          "┏",
-		TopRight:         "┓",
-		TopSeparator:     "┳",
-		UnfinishedRow:    " ≈",
-	}
+	StyleBoxBold = ComputeSimpleBoxStyle("┏━━━┳━━━┓\n" + "┣━━━╋━━━┫\n" + "┃   ┃   ┃ ≈\n" + "┗━━━┻━━━┛")
 
 	// StyleBoxDouble defines a Boxed-Table like below:
 	//  ╔═════╦════════════╦═══════════╦════════╦═════════════════════════════╗
@@ -416,26 +378,7 @@ var (
 	//  ╠═════╬════════════╬═══════════╬════════╬═════════════════════════════╣
 	//  ║     ║            ║ TOTAL     ║  10000 ║                             ║
 	//  ╚═════╩════════════╩═══════════╩════════╩═════════════════════════════╝
-	StyleBoxDouble = BoxStyle{
-		BottomLeft:       "╚",
-		BottomRight:      "╝",
-		BottomSeparator:  "╩",
-		EmptySeparator:   text.RepeatAndTrim(" ", text.RuneWidthWithoutEscSequences("╬")),
-		Left:             "║",
-		LeftSeparator:    "╠",
-		MiddleHorizontal: "═",
-		MiddleSeparator:  "╬",
-		MiddleVertical:   "║",
-		PaddingLeft:      " ",
-		PaddingRight:     " ",
-		PageSeparator:    "\n",
-		Right:            "║",
-		RightSeparator:   "╣",
-		TopLeft:          "╔",
-		TopRight:         "╗",
-		TopSeparator:     "╦",
-		UnfinishedRow:    " ≈",
-	}
+	StyleBoxDouble = ComputeSimpleBoxStyle("╔═══╦═══╗\n" + "╠═══╬═══╣\n" + "║   ║   ║ ≈\n" + "╚═══╩═══╝")
 
 	// StyleBoxLight defines a Boxed-Table like below:
 	//  ┌─────┬────────────┬───────────┬────────┬─────────────────────────────┐
@@ -447,26 +390,7 @@ var (
 	//  ├─────┼────────────┼───────────┼────────┼─────────────────────────────┤
 	//  │     │            │ TOTAL     │  10000 │                             │
 	//  └─────┴────────────┴───────────┴────────┴─────────────────────────────┘
-	StyleBoxLight = BoxStyle{
-		BottomLeft:       "└",
-		BottomRight:      "┘",
-		BottomSeparator:  "┴",
-		EmptySeparator:   text.RepeatAndTrim(" ", text.RuneWidthWithoutEscSequences("┼")),
-		Left:             "│",
-		LeftSeparator:    "├",
-		MiddleHorizontal: "─",
-		MiddleSeparator:  "┼",
-		MiddleVertical:   "│",
-		PaddingLeft:      " ",
-		PaddingRight:     " ",
-		PageSeparator:    "\n",
-		Right:            "│",
-		RightSeparator:   "┤",
-		TopLeft:          "┌",
-		TopRight:         "┐",
-		TopSeparator:     "┬",
-		UnfinishedRow:    " ≈",
-	}
+	StyleBoxLight = ComputeSimpleBoxStyle("┌───┬───┐\n" + "├───┼───┤\n" + "│   │   │ ≈\n" + "└───┴───┘")
 
 	// StyleBoxRounded defines a Boxed-Table like below:
 	//  ╭─────┬────────────┬───────────┬────────┬─────────────────────────────╮
@@ -478,26 +402,7 @@ var (
 	//  ├─────┼────────────┼───────────┼────────┼─────────────────────────────┤
 	//  │     │            │ TOTAL     │  10000 │                             │
 	//  ╰─────┴────────────┴───────────┴────────┴─────────────────────────────╯
-	StyleBoxRounded = BoxStyle{
-		BottomLeft:       "╰",
-		BottomRight:      "╯",
-		BottomSeparator:  "┴",
-		EmptySeparator:   text.RepeatAndTrim(" ", text.RuneWidthWithoutEscSequences("┼")),
-		Left:             "│",
-		LeftSeparator:    "├",
-		MiddleHorizontal: "─",
-		MiddleSeparator:  "┼",
-		MiddleVertical:   "│",
-		PaddingLeft:      " ",
-		PaddingRight:     " ",
-		PageSeparator:    "\n",
-		Right:            "│",
-		RightSeparator:   "┤",
-		TopLeft:          "╭",
-		TopRight:         "╮",
-		TopSeparator:     "┬",
-		UnfinishedRow:    " ≈",
-	}
+	StyleBoxRounded = ComputeSimpleBoxStyle("╭───┬───╮\n" + "├───┼───┤\n" + "│   │   │ ≈\n" + "╰───┴───╯")
 
 	// styleBoxTest defines a Boxed-Table like below:
 	//  (-----^------------^-----------^--------^-----------------------------)
@@ -509,26 +414,7 @@ var (
 	//  {-----+------------+-----------+--------+-----------------------------}
 	//  [<   >|<          >|<TOTAL    >|< 10000>|<                           >]
 	//  \-----v------------v-----------v--------v-----------------------------/
-	styleBoxTest = BoxStyle{
-		BottomLeft:       "\\",
-		BottomRight:      "/",
-		BottomSeparator:  "v",
-		EmptySeparator:   text.RepeatAndTrim(" ", text.RuneWidthWithoutEscSequences("+")),
-		Left:             "[",
-		LeftSeparator:    "{",
-		MiddleHorizontal: "--",
-		MiddleSeparator:  "+",
-		MiddleVertical:   "|",
-		PaddingLeft:      "<",
-		PaddingRight:     ">",
-		PageSeparator:    "\n",
-		Right:            "]",
-		RightSeparator:   "}",
-		TopLeft:          "(",
-		TopRight:         ")",
-		TopSeparator:     "^",
-		UnfinishedRow:    " ~~~",
-	}
+	styleBoxTest = ComputeSimpleBoxStyle("(---^---)\n" + "{---+---}\n" + "[< >|< >] ~~~\n" + "\\---v---/")
 )
 
 // ColorOptions defines the ANSI colors to use for parts of the Table.
