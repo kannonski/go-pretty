@@ -29,7 +29,7 @@ profile:
 	sh profile.sh
 
 test: fmt vet cyclo
-	go test -cover -coverprofile=.coverprofile $(shell go list ./...)
+	go test -cover -coverprofile=.coverprofile ./list ./progress ./table ./text
 
 test-race:
 	go run -race ./cmd/demo-progress/demo.go

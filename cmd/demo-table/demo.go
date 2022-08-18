@@ -308,7 +308,7 @@ func demoTableFeatures() {
 	// Does it support paging?
 	//==========================================================================
 	t.SetPageSize(1)
-	t.Style().Box.PageSeparator = "\n... page break ..."
+	t.Style().Border.Rows.PageSeparator = "\n... page break ..."
 	t.SetCaption("Table with a PageSize of 1.\n")
 	fmt.Println(t.Render())
 	//+-----+------------+-----------+--------+-----------------------------+

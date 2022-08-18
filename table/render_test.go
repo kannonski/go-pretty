@@ -229,8 +229,8 @@ func TestTable_Render_AutoMerge_Complex2(t *testing.T) {
 		{Number: 4, AutoMerge: true},
 	})
 	tw.SetStyle(StyleLight)
-	tw.Style().Box.PaddingLeft = ""
-	tw.Style().Box.PaddingRight = ""
+	tw.Style().Border.Rows.PaddingLeft = ""
+	tw.Style().Border.Rows.PaddingRight = ""
 	tw.Style().Options.DrawBorder = true
 	tw.Style().Options.SeparateRows = true
 	tw.Style().Options.SeparateColumns = true

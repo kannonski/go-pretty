@@ -54,8 +54,7 @@ func ComputeBoxStyle(boxDrawing string) BoxStyle {
 
 	// extract boxDrawing into charMatrix
 	boxDrawing = strings.TrimSpace(boxDrawing)
-	boxDrawingLines := strings.Split(boxDrawing, "\n")
-	for lineNum, line := range boxDrawingLines {
+	for lineNum, line := range strings.Split(boxDrawing, "\n") {
 		if lineNum <= maxLines { // ignore all lines beyond max allowed lines
 			line = strings.TrimSpace(line)
 
@@ -90,6 +89,50 @@ func ComputeBoxStyle(boxDrawing string) BoxStyle {
 		TopRight:         charMatrix[0][8],
 		TopSeparator:     charMatrix[0][4],
 		UnfinishedRow:    charMatrix[2][9],
+	}
+}
+
+// ComputeBoxConnectorStyle extracts the characters needed to construct a
+// connector between a Header and a Regular Row, or a Regular Row and a Footer.
+// For ex., with the following input:
+//  ┣━━━╋━━━┫ ~
+// the output would be:
+//   BoxConnectorStyle{
+//       LeftSeparator:    "┣",
+//       MiddleHorizontal: "━",
+//       MiddleSeparator:  "╋",
+//       RightSeparator:   "┫",
+//       UnfinishedRow:    " ~",
+//   }
+func ComputeBoxConnectorStyle(boxDrawing string) BoxConnectorStyle {
+	charMatrix := [1][10]string{}
+	maxLines := len(charMatrix)
+	maxLineLen := len(charMatrix[0])
+
+	// extract boxDrawing into charMatrix
+	boxDrawing = strings.TrimSpace(boxDrawing)
+	for lineNum, line := range strings.Split(boxDrawing, "\n") {
+		if lineNum <= maxLines { // ignore all lines beyond max allowed lines
+			line = strings.TrimSpace(line)
+
+			// extract individual "characters"
+			charNum := 0
+			for _, char := range line {
+				charMatrix[lineNum][charNum] += string(char)
+				// don't count beyond max allowed strings (last string contains all trailing chars)
+				if charNum < maxLineLen-1 {
+					charNum++
+				}
+			}
+		}
+	}
+
+	return BoxConnectorStyle{
+		LeftSeparator:    charMatrix[0][0],
+		MiddleHorizontal: charMatrix[0][2],
+		MiddleSeparator:  charMatrix[0][4],
+		RightSeparator:   charMatrix[0][8],
+		UnfinishedRow:    charMatrix[0][9],
 	}
 }
 

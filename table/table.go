@@ -380,42 +380,42 @@ func (t *Table) getBorderColors(hint renderHint) text.Colors {
 }
 
 func (t *Table) getBorderLeft(hint renderHint) string {
-	border := t.style.Box.Left
+	border := t.style.Border.Rows.Left
 	if hint.isBorderTop {
 		if t.title != "" {
-			border = t.style.Box.LeftSeparator
+			border = t.style.Border.Rows.LeftSeparator
 		} else {
-			border = t.style.Box.TopLeft
+			border = t.style.Border.Rows.TopLeft
 		}
 	} else if hint.isBorderBottom {
-		border = t.style.Box.BottomLeft
+		border = t.style.Border.Rows.BottomLeft
 	} else if hint.isSeparatorRow {
 		if t.autoIndex && hint.isHeaderOrFooterSeparator() {
-			border = t.style.Box.Left
+			border = t.style.Border.Rows.Left
 		} else if !t.autoIndex && t.shouldMergeCellsVertically(0, hint) {
-			border = t.style.Box.Left
+			border = t.style.Border.Rows.Left
 		} else {
-			border = t.style.Box.LeftSeparator
+			border = t.style.Border.Rows.LeftSeparator
 		}
 	}
 	return border
 }
 
 func (t *Table) getBorderRight(hint renderHint) string {
-	border := t.style.Box.Right
+	border := t.style.Border.Rows.Right
 	if hint.isBorderTop {
 		if t.title != "" {
-			border = t.style.Box.RightSeparator
+			border = t.style.Border.Rows.RightSeparator
 		} else {
-			border = t.style.Box.TopRight
+			border = t.style.Border.Rows.TopRight
 		}
 	} else if hint.isBorderBottom {
-		border = t.style.Box.BottomRight
+		border = t.style.Border.Rows.BottomRight
 	} else if hint.isSeparatorRow {
 		if t.shouldMergeCellsVertically(t.numColumns-1, hint) {
-			border = t.style.Box.Right
+			border = t.style.Border.Rows.Right
 		} else {
-			border = t.style.Box.RightSeparator
+			border = t.style.Border.Rows.RightSeparator
 		}
 	}
 	return border
@@ -442,19 +442,19 @@ func (t *Table) getColumnColors(colIdx int, hint renderHint) text.Colors {
 }
 
 func (t *Table) getColumnSeparator(row rowStr, colIdx int, hint renderHint) string {
-	separator := t.style.Box.MiddleVertical
+	separator := t.style.Border.Rows.MiddleVertical
 	if hint.isSeparatorRow {
 		if hint.isBorderTop {
 			if t.shouldMergeCellsHorizontallyBelow(row, colIdx, hint) {
-				separator = t.style.Box.MiddleHorizontal
+				separator = t.style.Border.Rows.MiddleHorizontal
 			} else {
-				separator = t.style.Box.TopSeparator
+				separator = t.style.Border.Rows.TopSeparator
 			}
 		} else if hint.isBorderBottom {
 			if t.shouldMergeCellsHorizontallyAbove(row, colIdx, hint) {
-				separator = t.style.Box.MiddleHorizontal
+				separator = t.style.Border.Rows.MiddleHorizontal
 			} else {
-				separator = t.style.Box.BottomSeparator
+				separator = t.style.Border.Rows.BottomSeparator
 			}
 		} else {
 			separator = t.getColumnSeparatorNonBorder(
@@ -481,32 +481,32 @@ func (t *Table) getColumnSeparatorNonBorder(mergeCellsAbove bool, mergeCellsBelo
 func (t *Table) getColumnSeparatorNonBorderAutoIndex(mergeNextCol bool, hint renderHint) string {
 	if hint.isHeaderOrFooterSeparator() {
 		if mergeNextCol {
-			return t.style.Box.MiddleVertical
+			return t.style.Border.Rows.MiddleVertical
 		}
-		return t.style.Box.LeftSeparator
+		return t.style.Border.Rows.LeftSeparator
 	} else if mergeNextCol {
-		return t.style.Box.RightSeparator
+		return t.style.Border.Rows.RightSeparator
 	}
-	return t.style.Box.MiddleSeparator
+	return t.style.Border.Rows.MiddleSeparator
 }
 
 func (t *Table) getColumnSeparatorNonBorderNonAutoIndex(mergeCellsAbove bool, mergeCellsBelow bool, mergeCurrCol bool, mergeNextCol bool) string {
 	if mergeCellsAbove && mergeCellsBelow && mergeCurrCol && mergeNextCol {
-		return t.style.Box.EmptySeparator
+		return t.style.Border.Rows.EmptySeparator
 	} else if mergeCellsAbove && mergeCellsBelow {
-		return t.style.Box.MiddleHorizontal
+		return t.style.Border.Rows.MiddleHorizontal
 	} else if mergeCellsAbove {
-		return t.style.Box.TopSeparator
+		return t.style.Border.Rows.TopSeparator
 	} else if mergeCellsBelow {
-		return t.style.Box.BottomSeparator
+		return t.style.Border.Rows.BottomSeparator
 	} else if mergeCurrCol && mergeNextCol {
-		return t.style.Box.MiddleVertical
+		return t.style.Border.Rows.MiddleVertical
 	} else if mergeCurrCol {
-		return t.style.Box.LeftSeparator
+		return t.style.Border.Rows.LeftSeparator
 	} else if mergeNextCol {
-		return t.style.Box.RightSeparator
+		return t.style.Border.Rows.RightSeparator
 	}
-	return t.style.Box.MiddleSeparator
+	return t.style.Border.Rows.MiddleSeparator
 }
 
 func (t *Table) getColumnTransformer(colIdx int, hint renderHint) text.Transformer {
@@ -550,9 +550,9 @@ func (t *Table) getFormat(hint renderHint) text.Format {
 
 func (t *Table) getMaxColumnLengthForMerging(colIdx int) int {
 	maxColumnLength := t.maxColumnLengths[colIdx]
-	maxColumnLength += text.RuneWidthWithoutEscSequences(t.style.Box.PaddingRight + t.style.Box.PaddingLeft)
+	maxColumnLength += text.RuneWidthWithoutEscSequences(t.style.Border.Rows.PaddingRight + t.style.Border.Rows.PaddingLeft)
 	if t.style.Options.SeparateColumns {
-		maxColumnLength += text.RuneWidthWithoutEscSequences(t.style.Box.EmptySeparator)
+		maxColumnLength += text.RuneWidthWithoutEscSequences(t.style.Border.Rows.EmptySeparator)
 	}
 	return maxColumnLength
 }
@@ -781,24 +781,24 @@ func (t *Table) initForRenderRowsStringify(rows []Row, hint renderHint) []rowStr
 func (t *Table) initForRenderRowSeparator() {
 	t.maxRowLength = 0
 	if t.autoIndex {
-		t.maxRowLength += text.RuneWidthWithoutEscSequences(t.style.Box.PaddingLeft)
+		t.maxRowLength += text.RuneWidthWithoutEscSequences(t.style.Border.Rows.PaddingLeft)
 		t.maxRowLength += len(fmt.Sprint(len(t.rows)))
-		t.maxRowLength += text.RuneWidthWithoutEscSequences(t.style.Box.PaddingRight)
+		t.maxRowLength += text.RuneWidthWithoutEscSequences(t.style.Border.Rows.PaddingRight)
 		if t.style.Options.SeparateColumns {
-			t.maxRowLength += text.RuneWidthWithoutEscSequences(t.style.Box.MiddleSeparator)
+			t.maxRowLength += text.RuneWidthWithoutEscSequences(t.style.Border.Rows.MiddleSeparator)
 		}
 	}
 	if t.style.Options.SeparateColumns {
-		t.maxRowLength += text.RuneWidthWithoutEscSequences(t.style.Box.MiddleSeparator) * (t.numColumns - 1)
+		t.maxRowLength += text.RuneWidthWithoutEscSequences(t.style.Border.Rows.MiddleSeparator) * (t.numColumns - 1)
 	}
 	t.rowSeparator = make(rowStr, t.numColumns)
 	for colIdx, maxColumnLength := range t.maxColumnLengths {
-		maxColumnLength += text.RuneWidthWithoutEscSequences(t.style.Box.PaddingLeft + t.style.Box.PaddingRight)
+		maxColumnLength += text.RuneWidthWithoutEscSequences(t.style.Border.Rows.PaddingLeft + t.style.Border.Rows.PaddingRight)
 		t.maxRowLength += maxColumnLength
-		t.rowSeparator[colIdx] = text.RepeatAndTrim(t.style.Box.MiddleHorizontal, maxColumnLength)
+		t.rowSeparator[colIdx] = text.RepeatAndTrim(t.style.Border.Rows.MiddleHorizontal, maxColumnLength)
 	}
 	if t.style.Options.DrawBorder {
-		t.maxRowLength += text.RuneWidthWithoutEscSequences(t.style.Box.Left + t.style.Box.Right)
+		t.maxRowLength += text.RuneWidthWithoutEscSequences(t.style.Border.Rows.Left + t.style.Border.Rows.Right)
 	}
 }
 

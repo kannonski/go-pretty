@@ -8,12 +8,15 @@ import (
 // on how the Table gets rendered on the Console.
 type Style struct {
 	Name    string        // name of the Style
-	Box     BoxStyle      // characters to use for the boxes
+	Border  BorderStyle   // characters to use for the borders/separators
 	Color   ColorOptions  // colors to use for the rows and columns
 	Format  FormatOptions // formatting options for the rows and columns
 	HTML    HTMLOptions   // rendering options for HTML mode
 	Options Options       // misc. options for the table
-	Title   TitleOptions  // formation options for the title text
+	Title   TitleOptions  // formatting options for the title text
+
+	// deprecated; in favor of Border which allows for more customizations.
+	Box BoxStyle // characters to use for the boxes
 }
 
 var (
@@ -29,7 +32,8 @@ var (
 	//  +-----+------------+-----------+--------+-----------------------------+
 	StyleDefault = Style{
 		Name:    "StyleDefault",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsDefault,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -49,7 +53,8 @@ var (
 	//  ┗━━━━━┻━━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 	StyleBold = Style{
 		Name:    "StyleBold",
-		Box:     StyleBoxBold,
+		Border:  BorderStyleBold,
+		Box:     BoxStyleBold,
 		Color:   ColorOptionsDefault,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -62,7 +67,8 @@ var (
 	// White background for other rows.
 	StyleColoredBright = Style{
 		Name:    "StyleColoredBright",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsBright,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -75,7 +81,8 @@ var (
 	// Black background.
 	StyleColoredDark = Style{
 		Name:    "StyleColoredDark",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsDark,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -88,7 +95,8 @@ var (
 	// White background for other rows.
 	StyleColoredBlackOnBlueWhite = Style{
 		Name:    "StyleColoredBlackOnBlueWhite",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsBlackOnBlueWhite,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -101,7 +109,8 @@ var (
 	// White background for other rows.
 	StyleColoredBlackOnCyanWhite = Style{
 		Name:    "StyleColoredBlackOnCyanWhite",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsBlackOnCyanWhite,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -114,7 +123,8 @@ var (
 	// White background for other rows.
 	StyleColoredBlackOnGreenWhite = Style{
 		Name:    "StyleColoredBlackOnGreenWhite",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsBlackOnGreenWhite,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -127,7 +137,8 @@ var (
 	// White background for other rows.
 	StyleColoredBlackOnMagentaWhite = Style{
 		Name:    "StyleColoredBlackOnMagentaWhite",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsBlackOnMagentaWhite,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -140,7 +151,8 @@ var (
 	// White background for other rows.
 	StyleColoredBlackOnYellowWhite = Style{
 		Name:    "StyleColoredBlackOnYellowWhite",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsBlackOnYellowWhite,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -153,7 +165,8 @@ var (
 	// White background for other rows.
 	StyleColoredBlackOnRedWhite = Style{
 		Name:    "StyleColoredBlackOnRedWhite",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsBlackOnRedWhite,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -166,7 +179,8 @@ var (
 	// White text, all on Black background.
 	StyleColoredBlueWhiteOnBlack = Style{
 		Name:    "StyleColoredBlueWhiteOnBlack",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsBlueWhiteOnBlack,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -179,7 +193,8 @@ var (
 	// White text, all on Black background.
 	StyleColoredCyanWhiteOnBlack = Style{
 		Name:    "StyleColoredCyanWhiteOnBlack",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsCyanWhiteOnBlack,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -192,7 +207,8 @@ var (
 	// White text, all on Black background.
 	StyleColoredGreenWhiteOnBlack = Style{
 		Name:    "StyleColoredGreenWhiteOnBlack",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsGreenWhiteOnBlack,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -205,7 +221,8 @@ var (
 	// White text, all on Black background.
 	StyleColoredMagentaWhiteOnBlack = Style{
 		Name:    "StyleColoredMagentaWhiteOnBlack",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsMagentaWhiteOnBlack,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -218,7 +235,8 @@ var (
 	// White text, all on Black background.
 	StyleColoredRedWhiteOnBlack = Style{
 		Name:    "StyleColoredRedWhiteOnBlack",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsRedWhiteOnBlack,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -231,7 +249,8 @@ var (
 	// White text, all on Black background.
 	StyleColoredYellowWhiteOnBlack = Style{
 		Name:    "StyleColoredYellowWhiteOnBlack",
-		Box:     StyleBoxDefault,
+		Border:  BorderStyleDefault,
+		Box:     BoxStyleDefault,
 		Color:   ColorOptionsYellowWhiteOnBlack,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -251,7 +270,8 @@ var (
 	//  ╚═════╩════════════╩═══════════╩════════╩═════════════════════════════╝
 	StyleDouble = Style{
 		Name:    "StyleDouble",
-		Box:     StyleBoxDouble,
+		Border:  BorderStyleDouble,
+		Box:     BoxStyleDouble,
 		Color:   ColorOptionsDefault,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -271,7 +291,8 @@ var (
 	//  └─────┴────────────┴───────────┴────────┴─────────────────────────────┘
 	StyleLight = Style{
 		Name:    "StyleLight",
-		Box:     StyleBoxLight,
+		Border:  BorderStyleLight,
+		Box:     BoxStyleLight,
 		Color:   ColorOptionsDefault,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -291,7 +312,8 @@ var (
 	//  ╰─────┴────────────┴───────────┴────────┴─────────────────────────────╯
 	StyleRounded = Style{
 		Name:    "StyleRounded",
-		Box:     StyleBoxRounded,
+		Border:  BorderStyleRounded,
+		Box:     BoxStyleRounded,
 		Color:   ColorOptionsDefault,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
@@ -311,12 +333,68 @@ var (
 	//  \-----v------------v-----------v--------v-----------------------------/
 	styleTest = Style{
 		Name:    "styleTest",
-		Box:     styleBoxTest,
+		Border:  BorderStyleTest,
+		Box:     BoxStyleTest,
 		Color:   ColorOptionsDefault,
 		Format:  FormatOptionsDefault,
 		HTML:    DefaultHTMLOptions,
 		Options: OptionsDefault,
 		Title:   TitleOptionsDefault,
+	}
+)
+
+// BorderStyle defines the characters/strings to use to render the borders and
+// separators for individual sections of the Table.
+type BorderStyle struct {
+	Headers              BoxStyle
+	HeadersRowsConnector BoxConnectorStyle
+	Rows                 BoxStyle
+	RowsFootersConnector BoxConnectorStyle
+	Footers              BoxStyle
+}
+
+var (
+	BorderStyleDefault = BorderStyle{
+		Headers:              BoxStyleDefault,
+		HeadersRowsConnector: BoxConnectorStyleDefault,
+		Rows:                 BoxStyleDefault,
+		RowsFootersConnector: BoxConnectorStyleDefault,
+		Footers:              BoxStyleDefault,
+	}
+	BorderStyleBold = BorderStyle{
+		Headers:              BoxStyleBold,
+		HeadersRowsConnector: BoxConnectorStyleBold,
+		Rows:                 BoxStyleBold,
+		RowsFootersConnector: BoxConnectorStyleBold,
+		Footers:              BoxStyleBold,
+	}
+	BorderStyleDouble = BorderStyle{
+		Headers:              BoxStyleDouble,
+		HeadersRowsConnector: BoxConnectorStyleDouble,
+		Rows:                 BoxStyleDouble,
+		RowsFootersConnector: BoxConnectorStyleDouble,
+		Footers:              BoxStyleDouble,
+	}
+	BorderStyleLight = BorderStyle{
+		Headers:              BoxStyleLight,
+		HeadersRowsConnector: BoxConnectorStyleLight,
+		Rows:                 BoxStyleLight,
+		RowsFootersConnector: BoxConnectorStyleLight,
+		Footers:              BoxStyleLight,
+	}
+	BorderStyleRounded = BorderStyle{
+		Headers:              BoxStyleRounded,
+		HeadersRowsConnector: BoxConnectorStyleRounded,
+		Rows:                 BoxStyleRounded,
+		RowsFootersConnector: BoxConnectorStyleRounded,
+		Footers:              BoxStyleRounded,
+	}
+	BorderStyleTest = BorderStyle{
+		Headers:              BoxStyleTest,
+		HeadersRowsConnector: BoxConnectorStyleTest,
+		Rows:                 BoxStyleTest,
+		RowsFootersConnector: BoxConnectorStyleTest,
+		Footers:              BoxStyleTest,
 	}
 )
 
@@ -344,6 +422,45 @@ type BoxStyle struct {
 }
 
 var (
+	BoxStyleDefault = ComputeBoxStyle(`
++---+---+
++---+---+
+|   |   | ~
++---+---+
+`)
+	BoxStyleBold = ComputeBoxStyle(`
+┏━━━┳━━━┓
+┣━━━╋━━━┫
+┃   ┃   ┃ ≈
+┗━━━┻━━━┛
+`)
+	BoxStyleDouble = ComputeBoxStyle(`
+╔═══╦═══╗
+╠═══╬═══╣
+║   ║   ║ ≈
+╚═══╩═══╝
+`)
+	BoxStyleLight = ComputeBoxStyle(`
+┌───┬───┐
+├───┼───┤
+│   │   │ ≈
+└───┴───┘
+`)
+	BoxStyleRounded = ComputeBoxStyle(`
+╭───┬───╮
+├───┼───┤
+│   │   │ ≈
+╰───┴───╯
+`)
+	BoxStyleTest = ComputeBoxStyle(`
+(---^---)
+{---+---}
+[< >|< >] ~~~
+\---v---/
+`)
+)
+
+var (
 	// StyleBoxDefault defines a Boxed-Table like below:
 	//  +-----+------------+-----------+--------+-----------------------------+
 	//  |   # | FIRST NAME | LAST NAME | SALARY |                             |
@@ -354,6 +471,7 @@ var (
 	//  +-----+------------+-----------+--------+-----------------------------+
 	//  |     |            | TOTAL     |  10000 |                             |
 	//  +-----+------------+-----------+--------+-----------------------------+
+	// deprecated; use BoxStyleDefault
 	StyleBoxDefault = ComputeBoxStyle("+---+---+\n" + "+---+---+\n" + "|   |   | ~\n" + "+---+---+")
 
 	// StyleBoxBold defines a Boxed-Table like below:
@@ -366,6 +484,7 @@ var (
 	//  ┣━━━━━╋━━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 	//  ┃     ┃            ┃ TOTAL     ┃  10000 ┃                             ┃
 	//  ┗━━━━━┻━━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+	// deprecated; use BoxStyleBold
 	StyleBoxBold = ComputeBoxStyle("┏━━━┳━━━┓\n" + "┣━━━╋━━━┫\n" + "┃   ┃   ┃ ≈\n" + "┗━━━┻━━━┛")
 
 	// StyleBoxDouble defines a Boxed-Table like below:
@@ -378,6 +497,7 @@ var (
 	//  ╠═════╬════════════╬═══════════╬════════╬═════════════════════════════╣
 	//  ║     ║            ║ TOTAL     ║  10000 ║                             ║
 	//  ╚═════╩════════════╩═══════════╩════════╩═════════════════════════════╝
+	// deprecated; use BoxStyleDouble
 	StyleBoxDouble = ComputeBoxStyle("╔═══╦═══╗\n" + "╠═══╬═══╣\n" + "║   ║   ║ ≈\n" + "╚═══╩═══╝")
 
 	// StyleBoxLight defines a Boxed-Table like below:
@@ -390,6 +510,7 @@ var (
 	//  ├─────┼────────────┼───────────┼────────┼─────────────────────────────┤
 	//  │     │            │ TOTAL     │  10000 │                             │
 	//  └─────┴────────────┴───────────┴────────┴─────────────────────────────┘
+	// deprecated; use BoxStyleLight
 	StyleBoxLight = ComputeBoxStyle("┌───┬───┐\n" + "├───┼───┤\n" + "│   │   │ ≈\n" + "└───┴───┘")
 
 	// StyleBoxRounded defines a Boxed-Table like below:
@@ -402,6 +523,7 @@ var (
 	//  ├─────┼────────────┼───────────┼────────┼─────────────────────────────┤
 	//  │     │            │ TOTAL     │  10000 │                             │
 	//  ╰─────┴────────────┴───────────┴────────┴─────────────────────────────╯
+	// deprecated; use BoxStyleRounded
 	StyleBoxRounded = ComputeBoxStyle("╭───┬───╮\n" + "├───┼───┤\n" + "│   │   │ ≈\n" + "╰───┴───╯")
 
 	// styleBoxTest defines a Boxed-Table like below:
@@ -414,7 +536,27 @@ var (
 	//  {-----+------------+-----------+--------+-----------------------------}
 	//  [<   >|<          >|<TOTAL    >|< 10000>|<                           >]
 	//  \-----v------------v-----------v--------v-----------------------------/
+	// deprecated; use BoxStyleTest
 	styleBoxTest = ComputeBoxStyle("(---^---)\n" + "{---+---}\n" + "[< >|< >] ~~~\n" + "\\---v---/")
+)
+
+// BoxConnectorStyle defines the characters/strings to use to render the
+// separator between a header and a regular row, or a regular row and a footer.
+type BoxConnectorStyle struct {
+	LeftSeparator    string
+	MiddleHorizontal string
+	MiddleSeparator  string
+	RightSeparator   string
+	UnfinishedRow    string
+}
+
+var (
+	BoxConnectorStyleDefault = ComputeBoxConnectorStyle(`+---+---+ ~`)
+	BoxConnectorStyleBold    = ComputeBoxConnectorStyle(`┣━━━╋━━━┫ ~`)
+	BoxConnectorStyleDouble  = ComputeBoxConnectorStyle(`╠═══╬═══╣ ~`)
+	BoxConnectorStyleLight   = ComputeBoxConnectorStyle(`├───┼───┤ ~`)
+	BoxConnectorStyleRounded = ComputeBoxConnectorStyle(`├───┼───┤ ~`)
+	BoxConnectorStyleTest    = ComputeBoxConnectorStyle(`[< >|< >] ~~~`)
 )
 
 // ColorOptions defines the ANSI colors to use for parts of the Table.

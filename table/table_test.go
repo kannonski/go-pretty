@@ -201,8 +201,8 @@ func TestTable_SetAllowedRowLength(t *testing.T) {
 	assert.Zero(t, table.allowedRowLength)
 	assert.Equal(t, expectedOutWithNoRowLimit, table.Render())
 
-	table.SetAllowedRowLength(utf8.RuneCountInString(table.style.Box.UnfinishedRow))
-	assert.Equal(t, utf8.RuneCountInString(table.style.Box.UnfinishedRow), table.allowedRowLength)
+	table.SetAllowedRowLength(utf8.RuneCountInString(table.style.Border.Rows.UnfinishedRow))
+	assert.Equal(t, utf8.RuneCountInString(table.style.Border.Rows.UnfinishedRow), table.allowedRowLength)
 	assert.Equal(t, "", table.Render())
 
 	table.SetAllowedRowLength(5)
